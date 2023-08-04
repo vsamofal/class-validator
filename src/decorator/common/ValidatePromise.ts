@@ -9,8 +9,7 @@ import { getMetadataStorage } from '../../metadata/MetadataStorage';
  */
 export function ValidatePromise(validationOptions?: ValidationOptions): PropertyDecorator {
   return function (object: object, propertyName: string | symbol): void {
-
-    if(typeof propertyName === 'symbol') {
+    if (typeof propertyName === 'symbol') {
       throw new Error('ValidatePromise does not support symbol properties');
     }
 

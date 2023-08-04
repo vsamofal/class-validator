@@ -30,7 +30,9 @@ export class MetadataStorage {
     const validationMetadatas = new ValidationSchemaToMetadataTransformer().transform(schema);
     validationMetadatas.forEach(validationMetadata => {
       this.addValidationMetadata(validationMetadata);
-      this.addConstraintMetadata(new ConstraintMetadata(validationMetadata.constraintCls, validationMetadata.name, false));
+      this.addConstraintMetadata(
+        new ConstraintMetadata(validationMetadata.constraintCls, validationMetadata.name, false)
+      );
     });
   }
 
@@ -106,7 +108,8 @@ export class MetadataStorage {
     };
 
     // get directly related to a target metadatas
-    const filteredForOriginalMetadatasSearch = this.validationMetadatas.get(targetConstructor) || this.validationMetadatas.get(targetSchema) || [];
+    const filteredForOriginalMetadatasSearch =
+      this.validationMetadatas.get(targetConstructor) || this.validationMetadatas.get(targetSchema) || [];
     const originalMetadatas = filteredForOriginalMetadatasSearch.filter(metadata => {
       if (metadata.target !== targetConstructor && metadata.target !== targetSchema) return false;
       if (includeMetadataBecauseOfAlwaysOption(metadata)) return true;
@@ -121,7 +124,7 @@ export class MetadataStorage {
     const filteredForInheritedMetadatasSearch = [];
     for (const [key, value] of this.validationMetadatas.entries()) {
       // if (targetConstructor.prototype instanceof key) {
-        filteredForInheritedMetadatasSearch.push(...value);
+      filteredForInheritedMetadatasSearch.push(...value);
       // }
     }
     const inheritedMetadatas = filteredForInheritedMetadatasSearch.filter(metadata => {

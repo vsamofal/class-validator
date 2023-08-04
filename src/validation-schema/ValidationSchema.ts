@@ -1,6 +1,6 @@
-import {ValidationMetadata} from "../metadata/ValidationMetadata";
+import { ValidationMetadata } from '../metadata/ValidationMetadata';
 import Func = jest.Func;
-import {ConstraintMetadata} from "../metadata/ConstraintMetadata";
+import { ConstraintMetadata } from '../metadata/ConstraintMetadata';
 
 /**
  * Validation schema is a decorator-free way of validation of your objects.

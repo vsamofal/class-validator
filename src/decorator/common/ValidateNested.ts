@@ -13,8 +13,7 @@ export function ValidateNested(validationOptions?: ValidationOptions): PropertyD
   opts.message = opts.message || eachPrefix + 'nested property $property must be either object or array';
 
   return function (object: object, propertyName: string | symbol): void {
-
-    if(typeof propertyName === 'symbol') {
+    if (typeof propertyName === 'symbol') {
       throw new Error('ValidateNested does not support symbol properties');
     }
 
