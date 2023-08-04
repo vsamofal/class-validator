@@ -122,10 +122,8 @@ export class MetadataStorage {
 
     // get metadatas for inherited classes
     const filteredForInheritedMetadatasSearch = [];
-    for (const [key, value] of this.validationMetadatas.entries()) {
-      // if (targetConstructor.prototype instanceof key) {
+    for (const value of this.validationMetadatas.values()) {
       filteredForInheritedMetadatasSearch.push(...value);
-      // }
     }
     const inheritedMetadatas = filteredForInheritedMetadatasSearch.filter(metadata => {
       // if target is a string it's means we validate against a schema, and there is no inheritance support for schemas
