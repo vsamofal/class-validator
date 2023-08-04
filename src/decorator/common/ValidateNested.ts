@@ -12,7 +12,12 @@ export function ValidateNested(validationOptions?: ValidationOptions): PropertyD
   const eachPrefix = opts.each ? 'each value in ' : '';
   opts.message = opts.message || eachPrefix + 'nested property $property must be either object or array';
 
-  return function (object: object, propertyName: string): void {
+  return function (object: object, propertyName: string | symbol): void {
+
+    if(typeof propertyName === 'symbol') {
+      throw new Error('ValidateNested does not support symbol properties');
+    }
+
     const args: ValidationMetadataArgs = {
       type: ValidationTypes.NESTED_VALIDATION,
       target: object.constructor,

@@ -43,8 +43,8 @@ export class ValidationUtils {
       ['string', 'boolean', 'number'].includes(typeof validationArguments.value)
     )
       messageString = messageString.replace(/\$value/g, validationArguments.value);
-    if (messageString) messageString = messageString.replace(/\$property/g, validationArguments.property);
-    if (messageString) messageString = messageString.replace(/\$target/g, validationArguments.targetName);
+    if (messageString) messageString = messageString.replace(/\$property/g, validationArguments.property.toString());
+    if (messageString) messageString = messageString.replace(/\$target/g, validationArguments.targetName.toString());
 
     return messageString;
   }

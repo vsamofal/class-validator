@@ -17,7 +17,7 @@ export interface ValidationDecoratorOptions {
   /**
    * Target object's property name to be validated.
    */
-  propertyName: string;
+  propertyName: string | symbol;
 
   /**
    * Name of the validation that is being registered.
@@ -54,7 +54,7 @@ export function registerDecorator(options: ValidationDecoratorOptions): void {
     constraintCls = options.validator;
     const constraintClasses = getFromContainer(MetadataStorage).getTargetValidatorConstraints(options.validator);
     if (constraintClasses.length > 1) {
-      throw `More than one implementation of ValidatorConstraintInterface found for validator on: ${options.target.name}:${options.propertyName}`;
+      throw `More than one implementation of ValidatorConstraintInterface found for validator on: ${options.target.name}:${options.propertyName.toString()}`;
     }
   } else {
     const validator = options.validator;

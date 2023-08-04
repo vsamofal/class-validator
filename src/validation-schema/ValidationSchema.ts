@@ -1,3 +1,7 @@
+import {ValidationMetadata} from "../metadata/ValidationMetadata";
+import Func = jest.Func;
+import {ConstraintMetadata} from "../metadata/ConstraintMetadata";
+
 /**
  * Validation schema is a decorator-free way of validation of your objects.
  * Also using validation schemas makes this library to be easily used with es6/es5.
@@ -30,6 +34,8 @@ export interface ValidationSchema {
        * Constraints set by validation type.
        */
       constraints?: any[];
+
+      constraintCls: Function;
 
       /**
        * Error message used to be used on validation fail.

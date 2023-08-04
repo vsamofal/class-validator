@@ -27,7 +27,7 @@ export class ValidationMetadata {
   /**
    * Property of the object to be validated.
    */
-  propertyName: string;
+  propertyName: string | symbol;
 
   /**
    * Constraint class that performs validation. Used only for custom validations.
@@ -78,15 +78,18 @@ export class ValidationMetadata {
     this.name = args.name;
     this.target = args.target;
     this.propertyName = args.propertyName;
-    this.constraints = args?.constraints;
+    this.constraints = args?.constraints || [];
     this.constraintCls = args.constraintCls;
     this.validationTypeOptions = args.validationTypeOptions;
-    if (args.validationOptions) {
-      this.message = args.validationOptions.message;
-      this.groups = args.validationOptions.groups;
-      this.always = args.validationOptions.always;
-      this.each = args.validationOptions.each;
-      this.context = args.validationOptions.context;
+
+    const options = args.validationOptions;
+
+    if (options) {
+      this.message = options.message;
+      this.groups = options.groups;
+      this.always = options.always;
+      this.each = options.each;
+      this.context = options.context;
     }
   }
 }

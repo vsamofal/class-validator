@@ -123,7 +123,7 @@ describe('decorator with default message', () => {
             return typeof value === 'string' && typeof relatedValue === 'string' && value.length > relatedValue.length;
           },
           defaultMessage(args: ValidationArguments): string {
-            return args.property + ' must be longer then ' + args.constraints[0];
+            return args.property.toString() + ' must be longer then ' + args.constraints[0];
           },
         },
       });
