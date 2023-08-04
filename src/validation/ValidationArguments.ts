@@ -26,5 +26,5 @@ export interface ValidationArguments {
   /**
    * Name of the object's property being validated.
    */
-  property: string;
+  property: string | symbol;
 }

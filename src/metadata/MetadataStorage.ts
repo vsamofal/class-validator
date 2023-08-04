@@ -28,7 +28,10 @@ export class MetadataStorage {
    */
   addValidationSchema(schema: ValidationSchema): void {
     const validationMetadatas = new ValidationSchemaToMetadataTransformer().transform(schema);
-    validationMetadatas.forEach(validationMetadata => this.addValidationMetadata(validationMetadata));
+    validationMetadatas.forEach(validationMetadata => {
+      this.addValidationMetadata(validationMetadata);
+      this.addConstraintMetadata(new ConstraintMetadata(validationMetadata.constraintCls, validationMetadata.name, false));
+    });
   }
 
   /**
@@ -61,7 +64,7 @@ export class MetadataStorage {
    * Groups metadata by their property names.
    */
   groupByPropertyName(metadata: ValidationMetadata[]): { [propertyName: string]: ValidationMetadata[] } {
-    const grouped: { [propertyName: string]: ValidationMetadata[] } = {};
+    const grouped: { [propertyName: string | symbol]: ValidationMetadata[] } = {};
     metadata.forEach(metadata => {
       if (!grouped[metadata.propertyName]) grouped[metadata.propertyName] = [];
       grouped[metadata.propertyName].push(metadata);
@@ -103,7 +106,7 @@ export class MetadataStorage {
     };
 
     // get directly related to a target metadatas
-    const filteredForOriginalMetadatasSearch = this.validationMetadatas.get(targetConstructor) || [];
+    const filteredForOriginalMetadatasSearch = this.validationMetadatas.get(targetConstructor) || this.validationMetadatas.get(targetSchema) || [];
     const originalMetadatas = filteredForOriginalMetadatasSearch.filter(metadata => {
       if (metadata.target !== targetConstructor && metadata.target !== targetSchema) return false;
       if (includeMetadataBecauseOfAlwaysOption(metadata)) return true;
@@ -117,9 +120,9 @@ export class MetadataStorage {
     // get metadatas for inherited classes
     const filteredForInheritedMetadatasSearch = [];
     for (const [key, value] of this.validationMetadatas.entries()) {
-      if (targetConstructor.prototype instanceof key) {
+      // if (targetConstructor.prototype instanceof key) {
         filteredForInheritedMetadatasSearch.push(...value);
-      }
+      // }
     }
     const inheritedMetadatas = filteredForInheritedMetadatasSearch.filter(metadata => {
       // if target is a string it's means we validate against a schema, and there is no inheritance support for schemas

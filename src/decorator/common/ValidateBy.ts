@@ -21,7 +21,7 @@ export function buildMessage(
 }
 
 export function ValidateBy(options: ValidateByOptions, validationOptions?: ValidationOptions): PropertyDecorator {
-  return function (object: object, propertyName: string): void {
+  return function (object: object, propertyName: string | symbol): void {
     registerDecorator({
       name: options.name,
       target: object.constructor,
